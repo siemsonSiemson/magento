@@ -7,7 +7,9 @@ use Riskified\Common\Validations;
 use Riskified\Common\Signature\HttpDataSignature;
 use Riskified\OrderWebhook\Transport\AdviceCurlTransport;
 
-
+/**
+ * Class Riskified_Full_Helper_Advice_AdviceBody
+ */
 class Riskified_Full_Helper_Advice_AdviceBody extends Mage_Core_Helper_Abstract
 {
     /**
@@ -47,6 +49,6 @@ class Riskified_Full_Helper_Advice_AdviceBody extends Mage_Core_Helper_Abstract
      */
     public function sendJsonAdviseRequest($json)
     {
-        $this->adviceCurl->send_json_request($json);
+        return $this->adviceCurl->send_json_request($json);
     }
 }
