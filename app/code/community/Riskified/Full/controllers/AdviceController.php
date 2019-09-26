@@ -11,11 +11,15 @@ class Riskified_Full_AdviceController extends Mage_Core_Controller_Front_Action
     public function callAction()
     {
         $helper = Mage::helper('full/advice_adviceBody');
+        $cart = Mage::getModel('checkout/cart')->getQuote();
+        $paymentObject = $cart->getPayment();
+        $paymentMethodObject = $paymentObject->getMethodInstance();
+
         $array = ["checkout" => [
-            "id" => '122',
-            "email" => "a@demo.pl",
-            "currency" => "USD",
-            "total_price" => '23',
+            "id" => $cart['entity_id'],
+            "email" => 'as@as.pl',
+            "currency" => $cart['quote_currency_code'],
+            "total_price" => $cart['grand_total'],
             "payment_details" => [
                 [
                     "avs_result_code" => "Y",
@@ -25,8 +29,8 @@ class Riskified_Full_AdviceController extends Mage_Core_Controller_Front_Action
                     "cvv_result_code" => "M"
                 ]
             ],
-            "_type" => 'credit_card',
-            "gateway" => 'credit_card'
+            "_type" => $paymentMethodObject->getFormBlockType(),
+            "gateway" => $paymentMethodObject->getCode()
         ]
         ];
 
@@ -50,14 +54,16 @@ class Riskified_Full_AdviceController extends Mage_Core_Controller_Front_Action
      */
     private function returnResponse($status, $authType)
     {
-        if($status != "captured"){
-            $adviceCallStatus = false;
-        }else {
+        if($status == "captured"){
+            $adviceCallStatus = true;
+        }elseif($status == "created") {
             if($authType == "sca" || $authType == "tra"){
                 $adviceCallStatus = false;
             }else{
                 $adviceCallStatus = true;
             }
+        }else{
+            $adviceCallStatus = false;
         }
 
         return $adviceCallStatus;

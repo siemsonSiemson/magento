@@ -586,6 +586,10 @@ vZero.prototype = {
      * @param options
      */
     hostedFieldsNonceReceived: function (nonce, options) {
+        console.log(this.clientToken);
+        debugger;
+
+
         //Check 3D Secure for Riskified-Advise-Api Status firstly.
         //If false status returned 3D Secure will be enabled.
         var serviceUrl = window.location.origin + "/full/advice/call",
