@@ -1,11 +1,10 @@
 <?php
 
 require_once(Mage::getBaseDir('lib') . DIRECTORY_SEPARATOR . 'riskified_php_sdk' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Riskified' . DIRECTORY_SEPARATOR . 'autoloader.php');
+require_once(Mage::getBaseDir() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'code' . DIRECTORY_SEPARATOR . 'community' . DIRECTORY_SEPARATOR . 'Riskified'. DIRECTORY_SEPARATOR . 'Full' . DIRECTORY_SEPARATOR . 'Transport' . DIRECTORY_SEPARATOR . 'AdviceCurlTransport.php');
 
 use Riskified\Common\Riskified;
 use Riskified\Common\Validations;
-use Riskified\Common\Signature\HttpDataSignature;
-use Riskified\OrderWebhook\Transport\AdviceCurlTransport;
 
 /**
  * Class Riskified_Full_Helper_Advice_AdviceBody
@@ -49,6 +48,7 @@ class Riskified_Full_Helper_Advice_AdviceBody extends Mage_Core_Helper_Abstract
      */
     public function sendJsonAdviseRequest($json)
     {
-        return $this->adviceCurl->send_json_request($json);
+
+        return $this->adviceCurl->executeJsonRequest($json, 'advise');
     }
 }

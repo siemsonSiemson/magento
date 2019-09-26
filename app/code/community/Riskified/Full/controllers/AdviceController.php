@@ -17,7 +17,7 @@ class Riskified_Full_AdviceController extends Mage_Core_Controller_Front_Action
 
         $array = ["checkout" => [
             "id" => $cart['entity_id'],
-            "email" => 'as@as.pl',
+            "email" => $cart['customer_email'],
             "currency" => $cart['quote_currency_code'],
             "total_price" => $cart['grand_total'],
             "payment_details" => [
